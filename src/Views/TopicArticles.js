@@ -7,11 +7,14 @@ export function TopicArticles() {
 
 	const topic = useParams("topic");
 	const [articles, setArticles] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 
 	function fetchAllArticles() {
 		axios.get(`https://sly-be-nc-news.herokuapp.com/api/articles?topic=${topic.topic}`)
 			.then(response => {
+				setIsLoading(true);
 				setArticles(response.data.articles);
+				setIsLoading(false);
 			});
 	}
 
@@ -20,10 +23,10 @@ export function TopicArticles() {
 	return <>
 		<h1>{topic.topic} Articles</h1>
 
-		<main className="articles-grid">
+		{(isLoading === true ? <p>Loading...</p> : <main className="articles-grid">
 			{articles.map((article) => {
 				return <ArticleCard article={article} key={article.article_id} />;
 			})}
-		</main>
+		</main>)}
 	</>;
 }
