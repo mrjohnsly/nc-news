@@ -5,11 +5,14 @@ import { ArticleCard } from "../Components/ArticleCard";
 export function AllArticles() {
 
 	const [articles, setArticles] = useState([]);
+	const [isLoading, setIsLoading] = useState(true);
 
 	function fetchAllArticles() {
 		axios.get("https://sly-be-nc-news.herokuapp.com/api/articles")
 			.then(response => {
+				setIsLoading(true);
 				setArticles(response.data.articles);
+				setIsLoading(false);
 			});
 	}
 
@@ -18,10 +21,10 @@ export function AllArticles() {
 	return <>
 		<h1>All Articles</h1>
 
-		<main className="articles-grid">
+		{(isLoading === true ? <p>Loading...</p> : <main className="articles-grid">
 			{articles.map((article) => {
 				return <ArticleCard article={article} key={article.article_id} />;
 			})}
-		</main>
+		</main>)}
 	</>;
 }
