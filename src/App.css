@@ -16,8 +16,33 @@
 	}
 }
 
+/* TODO: Fix flex spacing and align titles */
 article {
+	display: flex;
+	flex-wrap: wrap;
 	border: 1px solid grey;
 	border-radius: 1em;
 	padding: 1em;
+}
+
+article p,
+article time {
+	flex-basis: 49%;
+}
+
+article h2 {
+	align-self: stretch;
+	flex-grow: 1;
+}
+
+article footer {
+	flex-basis: 100%;
+	align-self: flex-end;
+}
+
+.article-topic-link {
+	display: inline-block;
+	background-color: gainsboro;
+	border-radius: 1em;
+	padding: 0.5em 1em;
 }
