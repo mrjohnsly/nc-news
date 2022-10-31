@@ -18,8 +18,10 @@ export function AllArticles() {
 	return <>
 		<h1>All Articles</h1>
 
-		{articles.map((article) => {
-			return <ArticleCard article={article} key={article.article_id} />;
-		})}
+		<main className="articles-grid">
+			{articles.map((article) => {
+				return <ArticleCard article={article} key={article.article_id} />;
+			})}
+		</main>
 	</>;
 }
