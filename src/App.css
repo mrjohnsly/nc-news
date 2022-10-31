@@ -1,38 +1,48 @@
-.App {
-  text-align: center;
+.articles-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-gap: 1em;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@media (min-width: 48em) and (max-width: 80em) {
+	.articles-grid {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+@media (min-width: 80em) {
+	.articles-grid {
+		grid-template-columns: 1fr 1fr 1fr 1fr;
+	}
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/* TODO: Fix flex spacing and align titles */
+article {
+	display: flex;
+	flex-wrap: wrap;
+	border: 1px solid grey;
+	border-radius: 1em;
+	padding: 1em;
 }
 
-.App-link {
-  color: #61dafb;
+article p,
+article time {
+	flex-basis: 49%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+article h2 {
+	align-self: stretch;
+	flex-grow: 1;
+}
+
+article footer {
+	flex-basis: 100%;
+	align-self: flex-end;
+}
+
+.article-topic-link {
+	display: inline-block;
+	background-color: gainsboro;
+	border-radius: 1em;
+	padding: 0.5em 1em;
 }
