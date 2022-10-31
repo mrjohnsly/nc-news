@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { ArticleCard } from "../Components/ArticleCard";
 
 export function AllArticles() {
 
@@ -16,5 +17,9 @@ export function AllArticles() {
 
 	return <>
 		<h1>All Articles</h1>
+
+		{articles.map((article) => {
+			return <ArticleCard article={article} key={article.article_id} />;
+		})}
 	</>;
 }
