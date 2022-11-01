@@ -10,15 +10,15 @@ export function TopicArticles() {
 	const [isLoading, setIsLoading] = useState(true);
 
 	function fetchAllArticles() {
+		setIsLoading(true);
 		axios.get(`https://sly-be-nc-news.herokuapp.com/api/articles?topic=${topic.topic}`)
 			.then(response => {
-				setIsLoading(true);
 				setArticles(response.data.articles);
 				setIsLoading(false);
 			});
 	}
 
-	useEffect(fetchAllArticles, []);
+	useEffect(fetchAllArticles, [topic]);
 
 	return <>
 		<h1>{topic.topic} Articles</h1>

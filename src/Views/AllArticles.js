@@ -8,9 +8,9 @@ export function AllArticles() {
 	const [isLoading, setIsLoading] = useState(true);
 
 	function fetchAllArticles() {
+		setIsLoading(true);
 		axios.get("https://sly-be-nc-news.herokuapp.com/api/articles")
 			.then(response => {
-				setIsLoading(true);
 				setArticles(response.data.articles);
 				setIsLoading(false);
 			});
