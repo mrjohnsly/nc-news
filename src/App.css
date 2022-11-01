@@ -60,3 +60,19 @@ article footer {
 		grid-template-columns: 3fr 1fr;
 	}
 }
+
+header ul {
+	list-style: none;
+}
+
+header ul li {
+	display: inline-block;
+	margin-left: 1em;
+}
+
+@media (min-width: 48em) {
+	header {
+		display: grid;
+		grid-template-columns: 1fr 3fr;
+	}
+}
