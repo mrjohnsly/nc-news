@@ -46,3 +46,17 @@ article footer {
 	border-radius: 1em;
 	padding: 0.5em 1em;
 }
+
+.single-article {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-gap: 4em;
+	max-width: 840px;
+	margin: 0 auto;
+}
+
+@media (min-width: 48em) {
+	.single-article {
+		grid-template-columns: 3fr 1fr;
+	}
+}
