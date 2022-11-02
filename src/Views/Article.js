@@ -20,8 +20,50 @@ export function Article() {
 
 	useEffect(fetchArticle, []);
 
+	function voteUp() {
+		setArticle((currentArticle) => {
+			const newArticle = { ...currentArticle };
+			newArticle.votes++;
+			return newArticle;
+		});
+
+		axios.patch(`https://sly-be-nc-news.herokuapp.com/api/articles/${articleId}`, {
+			inc_votes: 1
+		})
+			.then(() => {
+			})
+			.catch(() => {
+				setArticle((currentArticle) => {
+					const newArticle = { ...currentArticle };
+					newArticle.votes--;
+					return newArticle;
+				});
+			});
+	}
+
+	function voteDown() {
+		setArticle((currentArticle) => {
+			const newArticle = { ...currentArticle };
+			newArticle.votes--;
+			return newArticle;
+		});
+
+		axios.patch(`https://sly-be-nc-news.herokuapp.com/api/articles/${articleId}`, {
+			inc_votes: 1
+		})
+			.then(() => {
+			})
+			.catch(() => {
+				setArticle((currentArticle) => {
+					const newArticle = { ...currentArticle };
+					newArticle.votes++;
+					return newArticle;
+				});
+			});
+	}
+
 	return <>
-		{isLoading === true ? <p>Loading...</p> : <article class="single-article">
+		{isLoading === true ? <p>Loading...</p> : <article className="single-article">
 			<div>
 				<h2>{article.title}</h2>
 				<p>{article.body}</p>
@@ -31,7 +73,9 @@ export function Article() {
 				<time datetime="{article.created_at}">{article.created_at}</time>
 				<p className="article-topic-link">{article.topic}</p>
 				<p>Comments: {article.comment_count} 💬</p>
-				<p>Votes: {article.votes} 👍</p>
+				<p>Votes: {article.votes}</p>
+				<button onClick={voteUp}>👍</button>
+				<button onClick={voteDown}>👎</button>
 			</aside>
 		</article>}
 	</>;
