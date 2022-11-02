@@ -8,6 +8,7 @@ export function Article() {
 	const articleId = articleIdPath.article_id;
 	const [isLoading, setIsLoading] = useState(true);
 	const [article, setArticle] = useState({});
+	const [error, setError] = useState(null);
 
 	function fetchArticle() {
 		setIsLoading(true);
@@ -20,8 +21,29 @@ export function Article() {
 
 	useEffect(fetchArticle, []);
 
+	function vote(vote) {
+		setArticle((currentArticle) => {
+			const newArticle = { ...currentArticle };
+			newArticle.votes += vote;
+			return newArticle;
+		});
+
+		axios.patch(`https://sly-be-nc-news.herokuapp.com/api/articles/${articleId}`, {
+			inc_votes: vote
+		})
+			.catch(() => {
+				setError(true);
+				setArticle((currentArticle) => {
+					const newArticle = { ...currentArticle };
+					newArticle.votes -= vote;
+					return newArticle;
+				});
+				setTimeout(() => { setError(false); }, 4000);
+			});
+	}
+
 	return <>
-		{isLoading === true ? <p>Loading...</p> : <article class="single-article">
+		{isLoading === true ? <p>Loading...</p> : <article className="single-article">
 			<div>
 				<h2>{article.title}</h2>
 				<p>{article.body}</p>
@@ -31,7 +53,10 @@ export function Article() {
 				<time datetime="{article.created_at}">{article.created_at}</time>
 				<p className="article-topic-link">{article.topic}</p>
 				<p>Comments: {article.comment_count} 💬</p>
-				<p>Votes: {article.votes} 👍</p>
+				<p>Votes: {article.votes}</p>
+				<button onClick={() => { vote(1); }}>👍</button>
+				<button onClick={() => { vote(-1); }}>👎</button>
+				{error === true && <p>Error voting</p>}
 			</aside>
 		</article>}
 	</>;
