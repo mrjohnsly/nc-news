@@ -31,8 +31,6 @@ export function Article() {
 		axios.patch(`https://sly-be-nc-news.herokuapp.com/api/articles/${articleId}`, {
 			inc_votes: 1
 		})
-			.then(() => {
-			})
 			.catch(() => {
 				setError(true);
 				setArticle((currentArticle) => {
@@ -54,8 +52,6 @@ export function Article() {
 		axios.patch(`https://sly-be-nc-news.herokuapp.com/api/articles/${articleId}`, {
 			inc_votes: 1
 		})
-			.then(() => {
-			})
 			.catch(() => {
 				setError(true);
 				setArticle((currentArticle) => {
