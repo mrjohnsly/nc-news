@@ -76,3 +76,8 @@ header ul li {
 		grid-template-columns: 1fr 3fr;
 	}
 }
+
+.comment__author {
+	display: inline-block;
+	margin: 0 1em 0 0;
+}
