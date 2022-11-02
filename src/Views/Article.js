@@ -8,6 +8,7 @@ export function Article() {
 	const articleId = articleIdPath.article_id;
 	const [isLoading, setIsLoading] = useState(true);
 	const [article, setArticle] = useState({});
+	const [error, setError] = useState(null);
 
 	function fetchArticle() {
 		setIsLoading(true);
@@ -33,11 +34,13 @@ export function Article() {
 			.then(() => {
 			})
 			.catch(() => {
+				setError(true);
 				setArticle((currentArticle) => {
 					const newArticle = { ...currentArticle };
 					newArticle.votes--;
 					return newArticle;
 				});
+				setTimeout(() => { setError(false); }, 4000);
 			});
 	}
 
@@ -54,11 +57,13 @@ export function Article() {
 			.then(() => {
 			})
 			.catch(() => {
+				setError(true);
 				setArticle((currentArticle) => {
 					const newArticle = { ...currentArticle };
 					newArticle.votes++;
 					return newArticle;
 				});
+				setTimeout(() => { setError(false); }, 4000);
 			});
 	}
 
@@ -76,6 +81,7 @@ export function Article() {
 				<p>Votes: {article.votes}</p>
 				<button onClick={voteUp}>👍</button>
 				<button onClick={voteDown}>👎</button>
+				{error === true && <p>Error voting</p>}
 			</aside>
 		</article>}
 	</>;
