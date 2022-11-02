@@ -21,42 +21,21 @@ export function Article() {
 
 	useEffect(fetchArticle, []);
 
-	function voteUp() {
+	function vote(vote) {
 		setArticle((currentArticle) => {
 			const newArticle = { ...currentArticle };
-			newArticle.votes++;
+			newArticle.votes += vote;
 			return newArticle;
 		});
 
 		axios.patch(`https://sly-be-nc-news.herokuapp.com/api/articles/${articleId}`, {
-			inc_votes: 1
+			inc_votes: vote
 		})
 			.catch(() => {
 				setError(true);
 				setArticle((currentArticle) => {
 					const newArticle = { ...currentArticle };
-					newArticle.votes--;
-					return newArticle;
-				});
-				setTimeout(() => { setError(false); }, 4000);
-			});
-	}
-
-	function voteDown() {
-		setArticle((currentArticle) => {
-			const newArticle = { ...currentArticle };
-			newArticle.votes--;
-			return newArticle;
-		});
-
-		axios.patch(`https://sly-be-nc-news.herokuapp.com/api/articles/${articleId}`, {
-			inc_votes: 1
-		})
-			.catch(() => {
-				setError(true);
-				setArticle((currentArticle) => {
-					const newArticle = { ...currentArticle };
-					newArticle.votes++;
+					newArticle.votes -= vote;
 					return newArticle;
 				});
 				setTimeout(() => { setError(false); }, 4000);
@@ -75,8 +54,8 @@ export function Article() {
 				<p className="article-topic-link">{article.topic}</p>
 				<p>Comments: {article.comment_count} 💬</p>
 				<p>Votes: {article.votes}</p>
-				<button onClick={voteUp}>👍</button>
-				<button onClick={voteDown}>👎</button>
+				<button onClick={() => { vote(1); }}>👍</button>
+				<button onClick={() => { vote(-1); }}>👎</button>
 				{error === true && <p>Error voting</p>}
 			</aside>
 		</article>}
