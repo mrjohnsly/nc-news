@@ -40,7 +40,7 @@ export function Article() {
 			<Comments comments={comments} />
 
 			<br></br>
-			<CommentForm articleId={articleId} comments={comments} />
+			<CommentForm articleId={articleId} setComments={setComments} />
 		</article>}
 	</>;
 };
