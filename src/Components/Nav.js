@@ -1,19 +1,14 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { fetchTopics } from "../Services/APIService";
 
 export function Nav() {
 
 	const [topics, setTopics] = useState([]);
 
-	function fetchTopics() {
-		axios.get(`https://sly-be-nc-news.herokuapp.com/api/topics`)
-			.then((response) => {
-				setTopics(response.data.topics);
-			});
-	}
-
-	useEffect(fetchTopics, []);
+	useEffect(() => {
+		fetchTopics(setTopics);
+	}, []);
 
 	return <nav>
 		<ul>
