@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { CommentForm } from "../Components/CommentForm";
 import { fetchArticle, fetchComments, vote } from "../Services/APIService";
 import { Comments } from "./Comments";
 
@@ -37,6 +38,9 @@ export function Article() {
 			</aside>
 
 			<Comments comments={comments} />
+
+			<br></br>
+			<CommentForm />
 		</article>}
 	</>;
 };
