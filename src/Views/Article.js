@@ -12,6 +12,7 @@ export function Article() {
 	const [article, setArticle] = useState({});
 	const [error, setError] = useState(null);
 	const [comments, setComments] = useState([]);
+	const [newCommentError, setNewCommentError] = useState(null);
 
 	useEffect(() => {
 		fetchArticle(setArticle, setIsLoading, articleId);
@@ -40,7 +41,9 @@ export function Article() {
 			<Comments comments={comments} />
 
 			<br></br>
-			<CommentForm articleId={articleId} setComments={setComments} />
+			<CommentForm articleId={articleId} setComments={setComments} setNewCommentError={setNewCommentError} />
+			<br></br>
+			{newCommentError === true && <p>Error posting comment.</p>}
 		</article>}
 	</>;
 };

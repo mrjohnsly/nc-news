@@ -3,7 +3,7 @@ import { useState } from "react";
 
 export function CommentForm(props) {
 
-	const { articleId, setComments } = props;
+	const { articleId, setComments, setNewCommentError } = props;
 
 	const [usernameField, setUsernameField] = useState("");
 	const [commentField, setCommentField] = useState("");
@@ -32,16 +32,18 @@ export function CommentForm(props) {
 			return newComments;
 		});
 
-		axios.post(`https://sly-be-nc-news.herokuapp.com/api/articless/${articleId}/comments`, {
+		axios.post(`https://sly-be-nc-news.herokuapp.com/api/articles/${articleId}/comments`, {
 			"username": usernameField,
 			"body": commentField
 		})
 			.catch(() => {
+				setNewCommentError(true);
 				setComments((currentComments) => {
 					const restoredComments = [...currentComments];
 					restoredComments.pop();
 					return restoredComments;
 				});
+				setTimeout(() => { setNewCommentError(false); }, 4000);
 			});
 	}
 
