@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CommentForm } from "../Components/CommentForm";
 import { fetchArticle, fetchComments, vote } from "../Services/APIService";
-import { Comments } from "./Comments";
+import { Comments } from "../Components/Comments";
 
 export function Article() {
 
