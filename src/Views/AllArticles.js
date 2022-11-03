@@ -1,22 +1,15 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { ArticleCard } from "../Components/ArticleCard";
+import { fetchAllArticles } from "../Services/APIService";
 
 export function AllArticles() {
 
 	const [articles, setArticles] = useState([]);
 	const [isLoading, setIsLoading] = useState(true);
 
-	function fetchAllArticles() {
-		setIsLoading(true);
-		axios.get("https://sly-be-nc-news.herokuapp.com/api/articles")
-			.then(response => {
-				setArticles(response.data.articles);
-				setIsLoading(false);
-			});
-	}
-
-	useEffect(fetchAllArticles, []);
+	useEffect(() => {
+		fetchAllArticles(setArticles, setIsLoading);
+	}, []);
 
 	return <>
 		<h1>All Articles</h1>

@@ -1,6 +1,6 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { fetchArticle, fetchComments, vote } from "../Services/APIService";
 import { Comments } from "./Comments";
 
 export function Article() {
@@ -12,47 +12,12 @@ export function Article() {
 	const [error, setError] = useState(null);
 	const [comments, setComments] = useState([]);
 
-	function fetchArticle() {
-		setIsLoading(true);
-		axios.get(`https://sly-be-nc-news.herokuapp.com/api/articles/${articleId}`)
-			.then((response) => {
-				setArticle(response.data.article);
-				setIsLoading(false);
-			});
-	}
-
-	useEffect(fetchArticle, []);
-
-	function vote(vote) {
-		setArticle((currentArticle) => {
-			const newArticle = { ...currentArticle };
-			newArticle.votes += vote;
-			return newArticle;
-		});
-
-		axios.patch(`https://sly-be-nc-news.herokuapp.com/api/articles/${articleId}`, {
-			inc_votes: vote
-		})
-			.catch(() => {
-				setError(true);
-				setArticle((currentArticle) => {
-					const newArticle = { ...currentArticle };
-					newArticle.votes -= vote;
-					return newArticle;
-				});
-				setTimeout(() => { setError(false); }, 4000);
-			});
-	}
-
-	function fetchComments() {
-		axios.get(`https://sly-be-nc-news.herokuapp.com/api/articles/${articleId}/comments`)
-			.then(({ data: { comments } }) => {
-				console.log(comments);
-				setComments(comments);
-			});
-	}
-
-	useEffect(fetchComments, []);
+	useEffect(() => {
+		fetchArticle(setArticle, setIsLoading, articleId);
+	}, [articleId]);
+	useEffect(() => {
+		fetchComments(setComments, articleId);
+	}, [articleId]);
 
 	return <>
 		{isLoading === true ? <p>Loading...</p> : <article className="single-article">
@@ -66,8 +31,8 @@ export function Article() {
 				<p className="article-topic-link">{article.topic}</p>
 				<p>Comments: {article.comment_count} 💬</p>
 				<p>Votes: {article.votes}</p>
-				<button onClick={() => { vote(1); }}>👍</button>
-				<button onClick={() => { vote(-1); }}>👎</button>
+				<button onClick={() => { vote(1, setArticle, setError, articleId); }}>👍</button>
+				<button onClick={() => { vote(-1, setArticle, setError, articleId); }}>👎</button>
 				{error === true && <p>Error voting</p>}
 			</aside>
 
